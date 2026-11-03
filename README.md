@@ -1,2 +1,9 @@
-# water-inspector
-把妈妈请进电脑，催你喝水、起身，也惦记你有没有吃饭。A Windows desktop mom with custom characters and reminder lines.
+# 大水理论最严厉的母亲
+
+把妈妈请进电脑，催你喝水、起身，也惦记你有没有吃饭。
+
+**妈妈的形象和台词，由你来定。** 通过妈妈外观预设、发色和自定义台词，把桌面上的唠叨改成你熟悉的样子。
+
+Windows 桌面提醒工具 · 本地运行 · 中英文界面与台词
+
+首次发布正在准备中，完整源码、演示素材和 Windows 试用包尚未上传。
