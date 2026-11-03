@@ -1,0 +1,12 @@
+{
+  "synthetic_desktop": true,
+  "desktop_capture": false,
+  "renderer": "persona.render.render_flash",
+  "placement": "overlay.layered_window.place",
+  "default_show_ms": 1500,
+  "fade_ms": 500,
+  "custom_preview_show_ms": 3000,
+  "scene_gaps_compressed": true,
+  "duration_ms": 11900,
+  "personal_data_used": false
+}

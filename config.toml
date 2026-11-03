@@ -1,0 +1,152 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  大水理论督察员 · 全部可调参数
+#
+#  · 带 _min 的是分钟，带 _s 的是秒，带 _hours 的是小时。
+#  · 演示模式（demo_mode = true）下，所有“阈值类”时长 ×1/60（分钟变秒），方便快速自查。
+#    闪现时长、出场前延迟、切换防抖这类“体验类”时长不缩放，详见 DECISIONS.md D-12。
+#  · 改完保存即可：哨兵每分钟检查一次本文件是否变化，也可以在托盘菜单里“设置”保存后立即生效。
+#  · 文件写坏了不会崩溃：哨兵会在 logs/app.log 里报错并沿用默认值。
+# ─────────────────────────────────────────────────────────────────────────────
+
+[general]
+demo_mode = false
+language = "zh"            # zh / en
+persona = "default_mom"    # persona/ 下的角色包文件夹名
+day_start = "04:00"        # 每天在这个本地时间清零（凌晨加班到 2 点仍算前一天）
+
+[appearance]
+hair_color = "#4F3F3B"     # 发色（默认灰黑 = 参考图原样）；设置界面会改写这两行
+character = "east_asian"   # 肤色 = 角色：east_asian 华裔 / white 白人 / black 黑人 / south_asian 印度裔
+
+[custom_lines]
+# 自定义台词：在设置界面的“闪现预览”里点气泡就能改；也可以直接改这里。
+# xxx = 自定义的台词（留空 = 没有自定义）；use_xxx = true 用自定义，false 用角色包默认台词（自定义的内容会保留）。
+# 自定义与肤色、语言无关：换了角色或语言，自定义的台词照样保留。
+unlock_scold = ""
+use_unlock_scold = false
+side_peek = ""
+use_side_peek = false
+side_peek_water = ""
+use_side_peek_water = false
+overtime_care = ""
+use_overtime_care = false
+
+# ── 第 6.1 节：有效使用时长 ──────────────────────────────────────────────────
+[effective]
+grace_idle_min = 5          # 连续无输入、无音频满这么久，回溯把这段记为“离开”
+count_short_idle = true     # 不满 grace_idle_min 的停顿先计入有效（看文档、思考），见 DECISIONS D-10
+audio_recent_input_min = 20 # 无输入但有音频：距上次输入不到这么久才算有效（全屏时不受此限）
+
+# ── 第 6.2 节：两本账 ────────────────────────────────────────────────────────
+[ledger]
+long_absence_min = 5        # 锁屏/睡眠/无声离开 ≥ 此值：久坐账清零
+short_absence_min = 1       # 锁屏 [1, 5) 分钟：按下面比例削减
+short_lock_water_cut = 0.5  # 饮水账减 50%
+short_lock_sitting_cut = 0.3 # 久坐账减 30%
+response_window_min = 10    # 场景 A/B 出现后这么久之内……
+response_idle_min = 2       # ……出现锁屏或连续这么久无输入，记为“响应”，对应的账清零
+reset_on_new_day = true     # 每天换日时两本账一起清零（见 DECISIONS D-11）
+
+# ── 第 6.3 节：状态识别 ──────────────────────────────────────────────────────
+[classifier]
+window_min = 10              # 状态识别看最近多少分钟
+flow_input_min = 8           # 心流：最近 10 分钟有输入的分钟数 ≥ 此值……
+flow_max_switches = 2        # ……且前台切换 ≤ 此值，且前台是生产力类
+wander_window_min = 5        # 游离：最近 5 分钟……
+wander_min_switches = 6      # ……前台切换 ≥ 此值
+sparse_input_max_min = 2     # 或：前台是娱乐类，且最近 5 分钟有输入的分钟数 ≤ 此值（输入稀疏）
+burst_input_min = 5          # 断点·爆发后停顿：最近 10 分钟有输入 ≥ 此值……
+pause_min_s = 20             # ……随后出现 [20, 90] 秒无输入
+pause_max_s = 90
+category_switch_window_s = 60 # 断点·类别切换：切换后多少秒内算断点
+close_window_s = 10          # 断点·收尾动作：关闭窗口/退出应用后多少秒内算断点
+meeting_cooldown_min = 2     # 会议结束后多久才恢复
+meeting_stale_hours = 12     # 麦克风“开始使用”超过这么久仍未结束，视为注册表残留（不缩放）
+switch_debounce_s = 1.5      # 切换防抖：1.5 秒内连续切换（如 Alt+Tab 经过的窗口）只算一次
+fullscreen_check_foreground = true  # 除系统通知状态外，前台窗口铺满显示器也算全屏（F11 网页等）
+
+# ── 第 6.4 节：决策参数 ──────────────────────────────────────────────────────
+[policy]
+water_threshold_min = 60     # 饮水阈值（有效分钟）
+sitting_soft_min = 50        # 久坐软阈值：开始等待断点
+sitting_hard_min = 100       # 久坐硬上限：不再等待断点
+min_gap_min = 20             # 任意两次闪现的最小间隔
+scene_a_min_lock_min = 5     # 场景 A：本次锁屏至少这么久
+scene_a_delay_s = 3          # 场景 A：解锁后延迟几秒再出场（不缩放）
+scene_a_cap_min = 120        # 场景 A：每 120 分钟最多 1 次
+scene_c_effective_hours = 8  # 场景 C：今日有效时长 ≥ 8 小时……
+scene_c_after = "17:30"      # ……且本地时间 ≥ 17:30（时刻不缩放，演示时可改成几分钟后）
+decision_interval_s = 60     # 定时决策间隔
+quiet_hours = []             # 静默时段，例如 [["12:00", "13:30"], ["22:30", "08:00"]]
+
+# ── 第 5 节：自适应采样 ──────────────────────────────────────────────────────
+[sampling]
+idle_far_s = 30              # 离阈值远时 30 秒采样一次空闲时长
+idle_near_s = 5              # 接近阈值时 5 秒一次
+near_margin_min = 2          # 久坐账距软阈值不到 2 分钟即视为“接近”
+
+# ── 第 8 节：显示 ────────────────────────────────────────────────────────────
+[display]
+figure_height_ratio = 0.22   # 立绘高度 = 屏幕高度 × 此值
+font_scale = 1.0             # 台词字号倍率
+
+[scenes.unlock_scold]        # 场景 A：解锁训话
+show_s = 1.5
+fade_s = 0.5
+
+[scenes.side_peek]           # 场景 B：侧边探头
+show_s = 1.5
+fade_s = 0.5
+
+[scenes.overtime_care]       # 场景 C：加班关怀
+show_s = 1.5
+fade_s = 0.5
+
+# ── 应用分类表：进程名（不区分大小写）→ 类别 ────────────────────────────────
+#  类别：productivity 生产力 / communication 沟通 / browser 浏览器 / entertainment 娱乐 / meeting 会议
+#  没列出的进程归为 other（不触发“心流”，也不算“娱乐”）。
+[categories]
+default = "other"
+productivity = [
+  "code.exe", "cursor.exe", "windsurf.exe", "devenv.exe", "pycharm64.exe", "idea64.exe",
+  "webstorm64.exe", "clion64.exe", "goland64.exe", "rider64.exe", "datagrip64.exe",
+  "sublime_text.exe", "notepad++.exe", "notepad.exe", "vim.exe", "nvim.exe", "gvim.exe",
+  "windowsterminal.exe", "wt.exe", "cmd.exe", "powershell.exe", "pwsh.exe", "conhost.exe",
+  "winword.exe", "excel.exe", "powerpnt.exe", "onenote.exe", "msaccess.exe", "visio.exe",
+  "wps.exe", "et.exe", "wpp.exe", "wpspdf.exe", "acrobat.exe", "acrord32.exe",
+  "obsidian.exe", "notion.exe", "typora.exe", "logseq.exe", "xmind.exe",
+  "figma.exe", "photoshop.exe", "illustrator.exe", "afterfx.exe", "premiere pro.exe",
+  "blender.exe", "rstudio.exe", "spyder.exe", "jupyter-lab.exe", "tableau.exe", "pbidesktop.exe",
+  "matlab.exe", "stata-64.exe", "spss.exe", "zotero.exe", "endnote.exe", "postman.exe",
+  "dbeaver.exe", "navicat.exe", "ssms.exe", "github desktop.exe", "githubdesktop.exe",
+]
+communication = [
+  "wechat.exe", "weixin.exe", "qq.exe", "tim.exe", "dingtalk.exe", "feishu.exe", "lark.exe",
+  "slack.exe", "discord.exe", "telegram.exe", "whatsapp.exe", "outlook.exe", "olk.exe",
+  "thunderbird.exe", "foxmail.exe", "mail.exe", "signal.exe", "line.exe", "wxwork.exe",
+]
+browser = [
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe",
+  "arc.exe", "360se.exe", "360chrome.exe", "qqbrowser.exe", "sogouexplorer.exe", "iexplore.exe",
+]
+entertainment = [
+  "steam.exe", "steamwebhelper.exe", "epicgameslauncher.exe", "wegame.exe", "battle.net.exe",
+  "spotify.exe", "cloudmusic.exe", "qqmusic.exe", "kugou.exe", "kwmusic.exe",
+  "potplayermini64.exe", "potplayer.exe", "vlc.exe", "mpc-hc64.exe", "qqlive.exe",
+  "bilibili.exe", "哔哩哔哩.exe", "douyin.exe", "抖音.exe", "iqiyi.exe", "youku.exe",
+  "netflix.exe", "music.ui.exe", "video.ui.exe",
+]
+meeting = [
+  "wemeetapp.exe", "teams.exe", "ms-teams.exe", "zoom.exe", "webex.exe", "ciscocollabhost.exe",
+  "skype.exe", "voovmeeting.exe", "feishumeeting.exe",
+]
+
+# 浏览器再按标题关键词细分：标题含以下任一关键词（不区分大小写）→ 娱乐。
+# 标题只在内存里用于分类，分类后立即丢弃，绝不写入磁盘。
+[categories.browser_title]
+entertainment = [
+  "bilibili", "哔哩哔哩", "youtube", "小红书", "抖音", "douyin", "tiktok", "微博", "weibo",
+  "netflix", "twitch", "爱奇艺", "iqiyi", "优酷", "youku", "腾讯视频", "芒果tv", "斗鱼", "虎牙",
+  "instagram", "reddit", "9gag", "豆瓣", "快手",
+]
+communication = ["gmail", "outlook", "邮箱", "slack", "discord", "微信", "web.whatsapp", "飞书", "钉钉"]

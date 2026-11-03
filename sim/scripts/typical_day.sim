@@ -1,0 +1,58 @@
+# 典型的一天：核对两本账、有效时长与三个场景。预期数字逐条手算，推导写在每行注释里。
+title   典型的一天（账目核对）
+date    2026-11-02
+start   08:59
+end     23:30
+
+09:00-10:00  type   cat=productivity      # 心流打字 60 分钟
+expect 10:00 water=60 sitting=60 effective=60
+expect_no_flash 09:00-09:59:59 B          # 09:50 起久坐账 ≥ 50，但处于心流，只等断点
+10:00        switch cat=browser           # 生产力 → 浏览器：类别切换断点 → B（久坐台词：60/60 < 60/50）
+expect_flash B 10:00-10:01
+10:00-10:03:30 type cat=browser
+10:03:30-10:06 idle                       # 10:05:30 前后无输入满 2 分钟 → B“响应”，久坐清零（此前 10:04 已暂记）
+10:06-11:00  type   cat=productivity      # 10:03–10:05 的停顿不满 5 分钟，暂记转正
+expect 11:00 water=120 sitting=55 effective=120   # 久坐：清零后 10:05 那一分钟 1 + 10:06–10:59 共 54
+11:00        lock
+11:03        unlock                       # 锁屏 3 分钟：饮水 120×0.5，久坐 55×0.7
+expect 11:03 water=60 sitting=38.5 effective=120
+11:03-12:00  type   cat=productivity      # +57
+expect 12:00 water=117 sitting=95.5 effective=177
+12:00        switch cat=browser           # 断点 → B；117/60=1.95 > 95.5/50=1.91 → 换饮水台词
+expect_flash B 12:00-12:01
+12:00-12:15  type   cat=browser           # 10 分钟内无响应 → 记“未响应”；12:05 达硬上限但离上次闪现不足 20 分钟
+12:15        lock                         # 午饭
+13:15        unlock                       # 锁屏 60 分钟：久坐清零，饮水不变（132 ≥ 60）→ 3 秒后 A
+expect 13:15 water=132 sitting=0 effective=192
+expect_flash A 13:15-13:20                # 实际 13:15:03（出场前延迟 3 秒）
+13:15-13:20  type   cat=productivity
+13:20        lock                         # A 出现后 10 分钟内锁屏 → 响应，饮水账清零
+13:23        unlock                       # 锁屏 3 分钟：久坐 5×0.7=3.5
+expect 13:23 water=0 sitting=3.5 effective=197
+13:23-14:00  type   cat=productivity      # +37
+expect 14:00 water=37 sitting=40.5 effective=234
+14:00-14:40:30 video fullscreen cat=entertainment   # 全屏看视频 40 分钟：计入有效，不出现任何场景
+expect_no_flash 14:00-14:40:29
+expect 14:40 water=77 sitting=80.5 effective=274
+14:40:30-15:10 music                      # 视频结束、只剩音乐，距上次输入已 40 分钟 → 不算有效
+expect_flash B 14:40:30-14:41:30          # 前台娱乐 + 输入稀疏 = 游离 → B（久坐台词）；之后 2 分钟无输入 → 响应
+expect 15:10 water=77 sitting=0 effective=274   # 停顿满 5 分钟：回溯撤回暂记，久坐清零
+15:10-16:52  type   cat=productivity      # 16:50 久坐账 = 100 → 硬上限，心流也挡不住
+expect_flash B 16:50-16:51
+expect 16:51 water=178 sitting=101 effective=375
+16:52        lock                         # 响应（这次是饮水台词：177/60 > 100/50），饮水清零
+16:58        unlock                       # 锁屏 6 分钟：久坐清零
+expect 16:58 water=0 sitting=0 effective=376
+16:58-18:00  type   cat=productivity      # +62
+18:00        lock
+18:06        unlock                       # 锁屏 6 分钟，饮水 62 ≥ 60 → A（距上次 A 已超 2 小时）
+expect_flash A 18:06-18:10
+18:06-19:00  type   cat=productivity      # 18:48 今日有效达 480 分钟且已过 17:30 → C
+expect_flash C 18:48-18:49
+19:00-19:10  type   cat=browser           # 19:00 类别切换，但距 C 不足 20 分钟 → 被挡
+19:10-19:10:40 idle                       # 爆发后停顿 → B（饮水台词：126/60 > 64/50）
+expect_flash B 19:10:15-19:10:40
+19:10:40-19:20 type cat=browser
+19:20        lock                         # 响应 B → 饮水清零；一直锁到第二天
+expect 19:20 water=0 sitting=74 effective=512
+expect_total A=2 B=5 C=1

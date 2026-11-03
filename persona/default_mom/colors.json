@@ -1,0 +1,12 @@
+{
+  "hair": [
+    {"name": {"zh": "灰黑", "en": "Ash black"}, "hex": "#4F3F3B"},
+    {"name": {"zh": "乌黑", "en": "Black"}, "hex": "#262020"},
+    {"name": {"zh": "深棕", "en": "Dark brown"}, "hex": "#4A3022"},
+    {"name": {"zh": "栗色", "en": "Chestnut"}, "hex": "#7A4428"},
+    {"name": {"zh": "酒红", "en": "Wine"}, "hex": "#6E2230"},
+    {"name": {"zh": "花白", "en": "Salt & pepper"}, "hex": "#8F8A86"},
+    {"name": {"zh": "银灰", "en": "Silver"}, "hex": "#C4C1BC"},
+    {"name": {"zh": "金色", "en": "Blonde"}, "hex": "#D9B56E"}
+  ]
+}

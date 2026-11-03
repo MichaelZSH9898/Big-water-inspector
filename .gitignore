@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+logs/
+data/
+state.json
+_to_delete/
+build/
+dist/
+release/
+outputs/
+.review-tmp-*/
+persona/cache/*/
+tools/reports/
+*.spec

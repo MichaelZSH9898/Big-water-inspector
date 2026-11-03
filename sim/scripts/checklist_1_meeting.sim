@@ -1,0 +1,11 @@
+title   清单1 通话中（麦克风开启）不出现任何场景；挂断 2 分钟后才恢复
+start   08:59
+end     11:30
+09:00-09:55  type    cat=productivity          # 久坐 55
+09:55-10:50  meeting type cat=meeting          # 会议中照常打字；10:45 久坐达 100（硬上限）也被挡
+expect 10:30 state=meeting
+10:50-10:52:30 type  cat=browser               # 10:50 挂断
+10:51        close   cat=browser               # 收尾断点，但仍在“会议结束 2 分钟”内 → 被挡
+10:52:30-10:53:30 idle                         # 10:52:50 爆发后停顿：屏蔽已解除后的第一个断点 → B
+expect_no_flash 09:55-10:52:40
+expect_flash B 10:52:45-10:53:30

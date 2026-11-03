@@ -1,0 +1,17 @@
+title   清单4 锁屏 6 分钟后解锁（饮水账已超）：3 秒后出现场景 A
+config  policy.sitting_soft_min=1000
+config  policy.sitting_hard_min=2000
+start   08:59
+end     13:30
+09:00-10:05  type    cat=productivity          # 饮水 65
+10:05        lock
+10:11        unlock
+expect_no_flash 10:11-10:11:02 A               # 不是立刻出现……
+expect_flash A 10:11-10:15                     # ……而是 3 秒后（精确时刻由单元测试核对）
+10:11-12:20  type    cat=productivity          # 不理睬 → 记“未响应”，饮水账继续涨
+12:20        lock
+12:30        unlock                            # 距上次 A 已超 2 小时，饮水已超 → A 候选
+12:30:01-12:40 meeting type                    # 3 秒后复查：正在开会 → 放弃，不补发
+12:40-13:30  type    cat=productivity
+expect_no_flash 12:30-13:30 A
+expect_total A=1

@@ -1,0 +1,14 @@
+title   清单3 午休不锁屏、无声离开 2 小时：不计入有效时长
+config  policy.sitting_soft_min=1000           # 只看有效时长，关掉 B
+config  policy.sitting_hard_min=2000
+start   08:59
+end     15:00
+09:00-12:00  type    cat=productivity
+expect 12:00 effective=180
+12:00-14:00  idle
+expect 12:04 effective=184                     # 前 4 分钟先暂记（可能在看文档）
+expect 12:05 effective=180 water=180 sitting=0 # 满 5 分钟：回溯撤回，久坐清零
+expect 14:00 effective=180 water=180 sitting=0
+14:00-14:30  type    cat=productivity
+expect 14:30 effective=210
+expect_no_flash 12:00-14:00

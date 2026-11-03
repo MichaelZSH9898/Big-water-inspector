@@ -1,0 +1,11 @@
+title   清单5 锁屏 2 分钟后解锁：不出现场景 A，饮水账减半
+config  policy.sitting_soft_min=1000
+config  policy.sitting_hard_min=2000
+start   08:59
+end     10:30
+09:00-10:10  type    cat=productivity          # 饮水 70、久坐 70
+10:10        lock
+10:12        unlock                            # 饮水 ×0.5，久坐 ×0.7
+expect 10:12 water=35 sitting=49
+10:12-10:30  type    cat=productivity
+expect_no_flash 10:10-10:30 A

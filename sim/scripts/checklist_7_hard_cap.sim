@@ -1,0 +1,6 @@
+title   清单7 连续 100 有效分钟没有断点：场景 B 在硬上限时出现
+start   08:59
+end     10:59
+09:00-11:00  type    cat=productivity
+expect_no_flash 09:00-10:39:59 B
+expect_flash B 10:40-10:41

@@ -1,0 +1,12 @@
+# 跨天：04:00 换日时有效时长与两本账清零，并写一行每日摘要
+title   跨天清零
+date    2026-11-02
+start   21:59
+end     28:30
+demo_skip 跨天依赖真实的 04:00，压缩回放不适用
+22:00-23:30 type cat=productivity
+expect 23:30 effective=90
+23:30-26:30 type cat=productivity        # 加班到凌晨 2:30，仍算 11-02 这一天
+expect 26:30 effective=270
+26:30       lock
+expect 28:01 water=0 sitting=0 effective=0

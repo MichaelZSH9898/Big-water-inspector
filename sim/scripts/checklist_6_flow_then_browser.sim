@@ -1,0 +1,13 @@
+title   清单6 心流打字 60 分钟：不出现场景 B；切到浏览器刷网页后出现
+start   08:59
+end     10:30
+09:00-09:30  type    cat=productivity
+09:30-09:30:45 idle                            # 想一想：心流中的停顿不算断点
+09:30:45-09:52 type  cat=productivity
+09:52-09:52:40 idle                            # 久坐已过 50，仍是心流 → 不出现
+09:52:40-10:00 type  cat=productivity
+expect 09:59 state=flow sitting=59
+expect_no_flash 09:00-09:59:59 B
+10:00        switch  cat=browser
+10:00-10:20  type    cat=browser
+expect_flash B 10:00-10:01

@@ -1,0 +1,16 @@
+title   清单8 17:30 前已满 8 小时不出现 C；17:30 后第一个非屏蔽时刻出现，当天不再重复
+config  policy.sitting_soft_min=10000          # 只看 C
+config  policy.sitting_hard_min=20000
+config  policy.water_threshold_min=10000
+start   07:59
+end     21:00
+08:00-12:00  type    cat=productivity          # 240
+12:00        lock
+12:30        unlock
+12:30-17:20  type    cat=productivity          # 16:30 已满 480 分钟，但还没到 17:30
+expect 17:20 effective=530
+17:20-17:40  meeting type                      # 17:30 正在开会 → 挡住；17:40 挂断，17:42 恢复
+17:40-20:00  type    cat=productivity
+expect_no_flash 07:59-17:41:59 C
+expect_flash C 17:42-17:43
+expect_total C=1

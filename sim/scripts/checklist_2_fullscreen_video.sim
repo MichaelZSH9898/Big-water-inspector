@@ -1,0 +1,10 @@
+title   清单2 全屏看视频 30 分钟：计入有效时长，不出现场景
+start   08:59
+end     11:30
+09:00-10:15  type    cat=productivity          # 75
+10:15-10:45:30 video fullscreen cat=entertainment   # 10:40 久坐达 100，也被全屏挡住
+expect 10:45 effective=105 sitting=105
+expect_no_flash 10:15-10:45:30
+10:45:30-10:55 type  cat=productivity
+10:55-10:56  idle                              # 屏蔽解除后的第一个断点（爆发后停顿）→ 硬上限的 B
+expect_flash B 10:55:15-10:56
