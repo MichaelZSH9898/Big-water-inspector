@@ -23,7 +23,7 @@
 5. 创建预发布版本 `v0.1.0-preview`，上传 Windows ZIP 与 `SHA256SUMS.txt`，标记为 pre-release。
 6. 发布说明使用下文。发布后，可将 README 的下载入口直接链接到这个 Release。
 
-当前 README 的下载入口指向仓库内的说明页，尚无仓库地址时也不会产生虚假的下载链接。
+当前中英文 README 顶部直接链接到已发布的 Windows x64 试用包，同时保留仓库内的使用说明入口。
 仓库源文件和 Release 附件分开上传，避免将整个打包目录加入 Git 历史。
 
 ## 发布说明
@@ -54,3 +54,5 @@ GitHub Traffic 的访问和克隆可以帮助判断传播来源；它们不等�
 `v0.1.0-preview` 已作为预发布（Pre-release）发布，附件为 Windows x64 便携包、源码压缩包和 `SHA256SUMS.txt`：
 [发布页](https://github.com/MichaelZSH9898/Big-water-inspector/releases/tag/v0.1.0-preview)。
 旧版文件在本地 `release/旧版-请勿发布/`，不要上传。
+
+2026-11-03 的发布后收尾仅更新 main 文档与发布页说明。`v0.1.0-preview` 标签和三个附件保持原样，对应提交 `19da435883cfea6a79cd0aecebc3078d22263e0d`。已有源码附件不含后续文档改进；不要覆盖旧标签或附件来掩盖差异。下次更改程序时按新版本重新构建、校验和发布。

@@ -8,7 +8,9 @@
 
 Windows desktop companion · Customize Mom’s appearance & lines · Runs locally
 
-[**Preview build & setup**](docs/DOWNLOAD.md#english) · [简体中文](README.md)
+[**Download for Windows x64**](https://github.com/MichaelZSH9898/Big-water-inspector/releases/download/v0.1.0-preview/Big-water-inspector-0.1.0-preview-Windows-x64.zip) · [Setup guide](docs/DOWNLOAD.md#english) · [简体中文](README.md)
+
+<sub>Windows only · Unsigned pre-release · Extract and run; no Python installation needed</sub>
 
 ![Synthetic desktop demonstration of the app's reminders](docs/media/desktop-demo.gif)
 
