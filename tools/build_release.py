@@ -15,6 +15,8 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = "0.1.0-preview"
 PROJECT_NAME = "大水理论最严厉的母亲"
+# GitHub 会删掉 Release 附件名里的中文等非 ASCII 字符，所以附件文件名用英文；压缩包里的文件夹和程序仍用中文名。
+ASSET_SLUG = "Big-water-inspector"
 SOURCE_DIRS = {"assets", "core", "docs", "overlay", "persona", "settings_ui", "signals", "sim", "tests", "tools", "winapi"}
 SOURCE_FILES = {"main.py", "desktop_app.py", "config.toml", "requirements.txt", "README.md", "README.en.md",
                 "PLAN.md", "DECISIONS.md", "LICENSE", "ASSET_NOTICES.md", "CONTRIBUTING.md", "CHANGELOG.md", ".gitignore",
@@ -71,7 +73,7 @@ def main():
     a=parser.parse_args()
     out=ROOT/"release"
     out.mkdir(exist_ok=True)
-    source_zip=out/f"{PROJECT_NAME}-{VERSION}-源码.zip"
+    source_zip=out/f"{ASSET_SLUG}-{VERSION}-source.zip"
     with zipfile.ZipFile(source_zip,"w",zipfile.ZIP_DEFLATED,compresslevel=9) as z:
         for p in source_files():
             z.write(p,Path(PROJECT_NAME)/p.relative_to(ROOT))
@@ -113,10 +115,10 @@ def main():
             (bundle/name).write_text('@echo off\nchcp 65001 >nul\ncd /d "%~dp0"\nstart "" "%~dp0大水理论最严厉的母亲.exe" '+args+'\n',encoding="utf-8")
         shutil.copy2(ROOT/"docs/PORTABLE_README.txt",bundle/"先读我.txt")
         third_party(bundle)
-        portable_zip=out/f"{PROJECT_NAME}-{VERSION}-Windows-x64.zip"
+        portable_zip=out/f"{ASSET_SLUG}-{VERSION}-Windows-x64.zip"
         zip_tree(bundle,portable_zip)
         products.append(portable_zip)
-    hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.glob(f"{PROJECT_NAME}-{VERSION}-*.zip"))}
+    hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.glob(f"{ASSET_SLUG}-{VERSION}-*.zip"))}
     (out/"SHA256SUMS.txt").write_text("".join(f"{h}  {n}\n" for n,h in hashes.items()),encoding="utf-8")
     print(json.dumps({"files":[str(p) for p in products],"sha256":hashes},ensure_ascii=False,indent=2))
 

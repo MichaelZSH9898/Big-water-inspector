@@ -8,7 +8,7 @@ import subprocess
 import zipfile
 
 from PIL import Image
-from tools.build_release import PROJECT_NAME, VERSION
+from tools.build_release import ASSET_SLUG, PROJECT_NAME, VERSION
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"outputs/verification"
@@ -28,15 +28,15 @@ def main():
     assert not missing,missing
     releases=ROOT/"release"
     archives={}
-    for suffix in ("源码","Windows-x64"):
-        path=releases/f"{PROJECT_NAME}-{VERSION}-{suffix}.zip"
+    for suffix in ("source","Windows-x64"):
+        path=releases/f"{ASSET_SLUG}-{VERSION}-{suffix}.zip"
         with zipfile.ZipFile(path) as z:
             assert z.testzip() is None
             names=z.namelist()
             forbidden=[n for n in names if any(x in Path(n).parts for x in ("logs","data","_to_delete","__pycache__","build","outputs")) or n.endswith("/state.json")]
             assert not forbidden,forbidden
             archives[suffix]={"files":len(names),"bytes":path.stat().st_size,"sha256":hashlib.sha256(path.read_bytes()).hexdigest(),"private_runtime_files":forbidden}
-            if suffix=="源码":
+            if suffix=="source":
                 assert f"{PROJECT_NAME}/启动督察员.bat" in names
                 assert f"{PROJECT_NAME}/docs/VALIDATION.md" in names
                 assert f"{PROJECT_NAME}/docs/media/desktop-demo.gif" in names

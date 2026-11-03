@@ -4,9 +4,12 @@
 
 在项目目录运行 `python -m tools.build_release`，可生成：
 
-- `release/大水理论最严厉的母亲-0.1.0-preview-源码.zip`：用于上传仓库的源码，按明确的文件清单打包，排除个人日志、状态、旧素材和构建缓存。
-- `release/大水理论最严厉的母亲-0.1.0-preview-Windows-x64.zip`：Windows 便携包，无需安装 Python。
+- `release/Big-water-inspector-0.1.0-preview-source.zip`：用于上传仓库的源码，按明确的文件清单打包，排除个人日志、状态、旧素材和构建缓存。
+- `release/Big-water-inspector-0.1.0-preview-Windows-x64.zip`：Windows 便携包，无需安装 Python。
 - `release/SHA256SUMS.txt`：校验和。
+
+附件文件名用英文：GitHub 会删掉 Release 附件名里的中文字符（例如“源码”会消失），中文名会让下载链接和校验和对不上。
+压缩包里的文件夹、程序和启动脚本仍是中文名，不受影响。
 
 构建工具使用 PyInstaller；先在 Windows 安装 `pyinstaller` 和项目依赖。便携包保留 Python、Pillow、PyInstaller 及字体许可证。
 安装和构建工具是维护者操作，普通用户无需执行。
@@ -29,7 +32,7 @@
 
 妈妈会从桌面边缘探头，提醒你喝水、起身，也会在长时间工作后送来一句关心。你可以自定义妈妈的形象、肤色、发色和台词，界面与台词支持中英文。
 
-下载 `大水理论最严厉的母亲-0.1.0-preview-Windows-x64.zip`，完整解压后双击 `1-先看演示.cmd`。无需安装 Python。
+下载 `Big-water-inspector-0.1.0-preview-Windows-x64.zip`，完整解压后双击 `1-先看演示.cmd`。无需安装 Python。
 
 这是未签名的试用版。请核对附件校验和。测试范围与未覆盖项目见 `docs/VALIDATION.md`。
 展示中的桌面为绘制的示意场景，并非实机录屏。

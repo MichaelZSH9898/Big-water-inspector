@@ -2,9 +2,9 @@
 
 ## Windows 免安装试用包
 
-[下载 Windows x64 试用包](https://github.com/MichaelZSH9898/Big-water-inspector/releases/download/v0.1.0-preview/大水理论最严厉的母亲-0.1.0-preview-Windows-x64.zip) · [发布页与校验和](https://github.com/MichaelZSH9898/Big-water-inspector/releases/tag/v0.1.0-preview)
+[下载 Windows x64 试用包](https://github.com/MichaelZSH9898/Big-water-inspector/releases/download/v0.1.0-preview/Big-water-inspector-0.1.0-preview-Windows-x64.zip) · [发布页与校验和](https://github.com/MichaelZSH9898/Big-water-inspector/releases/tag/v0.1.0-preview)
 
-在 GitHub 仓库页面右侧的 **Releases** 中，选择最新试用版本，下载名字以 **`windows-x64.zip`** 结尾的附件。
+在 GitHub 仓库页面右侧的 **Releases** 中，选择最新试用版本，下载名字以 **`Windows-x64.zip`** 结尾的附件。
 请下载发布者提供的 Windows 包；GitHub 自动生成的 “Source code” 是源码，需要另行安装 Python。
 
 如果仓库还没有 Release，表示维护者尚未上传试用包，请使用下面的源码运行方式。
@@ -46,7 +46,7 @@ python -m settings_ui.app
 
 ## English
 
-On the GitHub repository page, open **Releases** and download the attachment ending in **`windows-x64.zip`**. GitHub's automatically generated “Source code” archives require Python. If there is no release yet, use the source instructions below.
+On the GitHub repository page, open **Releases** and download the attachment ending in **`Windows-x64.zip`**. GitHub's automatically generated “Source code” archives require Python. If there is no release yet, use the source instructions below.
 
 Extract the whole portable ZIP into a writable folder. Keep all files together. Open the numbered launchers:
 
